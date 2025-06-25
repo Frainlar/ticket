@@ -1,0 +1,71 @@
+// Prisma schema for MongoDB
+ datasource db {
+   provider = "mongodb"
+   url      = env("DATABASE_URL")
+ }
+
+ generator client {
+   provider = "prisma-client-js"
+ }
+
+ model User {
+   id       String   @id @default(auto()) @map("_id")
+   name     String
+   email    String   @unique
+   role     String
+   tickets  Ticket[]
+ }
+
+ model Ticket {
+   id            String   @id @default(auto()) @map("_id")
+   title         String
+   description   String
+   type          String
+   priority      String
+   status        String
+   slaId         String
+   assignedToId  String?
+   createdById   String
+   createdAt     DateTime @default(now())
+   updatedAt     DateTime @updatedAt
+   comments      Comment[]
+ }
+
+ model Comment {
+   id         String   @id @default(auto()) @map("_id")
+   ticketId   String
+   authorId   String
+   body       String
+   createdAt  DateTime @default(now())
+ }
+
+ model SLA {
+   id             String   @id @default(auto()) @map("_id")
+   ticketType     String
+   responseTime   Int
+   resolutionTime Int
+ }
+
+ model FeatureRequest {
+   id          String   @id @default(auto()) @map("_id")
+   title       String
+   description String
+   votes       Int      @default(0)
+   status      String
+   createdAt   DateTime @default(now())
+ }
+
+ model RoadmapItem {
+   id            String   @id @default(auto()) @map("_id")
+   title         String
+   status        String
+   linkedFeatures String[]
+ }
+
+ model ReleaseNote {
+   id            String   @id @default(auto()) @map("_id")
+   version       String
+   description   String
+   linkedTickets String[]
+   createdAt     DateTime @default(now())
+ }
