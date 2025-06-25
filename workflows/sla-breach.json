@@ -1,0 +1,7 @@
+{
+  "name": "SLA Breach Notification",
+  "nodes": [
+    {"parameters": {}, "name": "Start", "type": "n8n-nodes-base.start"},
+    {"parameters": {"subscriberId": "={{$json.ticketId}}"}, "name": "Novu", "type": "novu"}
+  ]
+}
